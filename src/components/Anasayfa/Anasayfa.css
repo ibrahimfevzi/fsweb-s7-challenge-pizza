@@ -43,6 +43,13 @@ img {
 
 .KodAciktirir {
   font-size: 3.5rem;
-  margin-top: 1rem;
   font-family: "Barlow", sans-serif;
+}
+
+.fırsat {
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  font-family: "Satisfy", sans-serif;
+  color: #fdc913;
+  font-weight: bold;
 }

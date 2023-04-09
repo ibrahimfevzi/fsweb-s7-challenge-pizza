@@ -11,7 +11,6 @@ const App = () => {
       <Route path="/success">
         <Success />
       </Route>
-
       <Route path="/order-pizza">
         <PizzaForm />
       </Route>

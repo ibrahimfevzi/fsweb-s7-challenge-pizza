@@ -62,6 +62,7 @@ const PizzaForm = () => {
       <div className="container2">
         <div>
           <h1 className="tekno">Teknolojik Yemekler</h1>
+          <p className="fırsat">fırsatı kaçırma</p>
         </div>
         <nav>
           <ul>

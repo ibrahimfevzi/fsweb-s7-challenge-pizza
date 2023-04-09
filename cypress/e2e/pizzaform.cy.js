@@ -10,8 +10,8 @@ describe("Form Submission Test", () => {
     cy.get('select[name="size-dropdown"]').select("Büyük");
 
     // Pepperoni ve Sosis seç
-    cy.get('input[name="toppings1"][value="pepperoni"]').check();
-    cy.get('input[name="toppings4"][value="sausage"]').check();
+    cy.get('input[name="toppings"][value="pepperoni"]').check();
+    cy.get('input[name="toppings"][value="sausage"]').check();
 
     // Özel istekler
     cy.get('input[name="special-text"]').type("Baharat tozu istiyorum");

@@ -9,10 +9,14 @@ const Anasayfa = () => {
     history.push("/order-pizza");
   };
 
+  const handleSubmit = () => {
+    history.push("/success");
+  };
+
   return (
     <div className="container">
       <h1>Teknolojik Yemekler</h1>
-      <p>
+      <p className="KodAciktirir">
         KOD ACIKTIRIR <br /> PİZZA, DOYURUR
       </p>
       <button onClick={handlePizzaOrder}>ACIKTIM</button>

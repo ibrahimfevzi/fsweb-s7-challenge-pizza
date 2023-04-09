@@ -104,8 +104,16 @@ Gerekli öğelerinizi bitirdikten sonra çalışmanızı daha da ileri götüreb
 Aşağıdaki soruları yanıtlayarak bu sprint'in kavramlarını anladığınızı gösterin. Her sorudan sonra yanıtlarınızı eklemek için bu belgeyi düzenleyin.
 
 1. 1-2 cümle ile, React'ın `useRouteMatch` hookunun ne için kullanıdığını açıklayın.
+
+React'ın useRouteMatch hook'u, React Router ile birlikte kullanıldığında, mevcut URL ile eşleşen bir route tanımını almak ve bu bilgiyi kullanarak component'inin render edilmesini sağlamak için kullanılır. Bu hook, dinamik URL'leri kullanarak component'lerin oluşturulmasını ve yönlendirme işlemlerinin yapılmasını kolaylaştırır.
+
 2. Daha önce hiç programlama yapmamış birine form validationı(doğrulama) nasıl açıklarsınız?
+
+Form validation, kullanıcının bir formu doldururken girdiği verilerin doğruluğunu kontrol etmek için kullanılan bir yöntemdir. Bu işlem, formdaki her alan için kullanıcının girdiği verilerin belirli bir formatta veya belirli kurallara uygunluğunu kontrol ederek gerçekleştirilir. Bu sayede, kullanıcının yanlış veya eksik veri girmesi önlenir ve formun gönderilmesiyle ortaya çıkabilecek hatalar en aza indirilir. Form validation, hem kullanıcı deneyimi hem de veri bütünlüğü açısından son derece önemlidir ve web uygulamalarının birçok yerinde kullanılır.
+
 3. 1-2 cümle ile, uç uca testlerin ne işe yaradığını açıklayın.
+
+Uç uca testler, bir uygulamanın tüm bileşenlerinin bir arada düzgün çalıştığını kontrol etmek için kullanılır. Bu testler, kullanıcının göreceği sonuçları simüle ederek, uygulamanın gerçek dünya kullanım koşullarında nasıl çalışacağını belirlemek için kullanılır. Uç uca testler aynı zamanda, kodun belirli bir bölümünde değişiklik yapılması durumunda, diğer bölümleri etkileyip etkilemediğini kontrol etmek için de kullanılır.
 
 ## SSS
 

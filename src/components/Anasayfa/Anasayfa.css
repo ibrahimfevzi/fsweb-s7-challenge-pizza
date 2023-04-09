@@ -40,3 +40,9 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.KodAciktirir {
+  font-size: 3.5rem;
+  margin-top: 1rem;
+  font-family: "Barlow", sans-serif;
+}

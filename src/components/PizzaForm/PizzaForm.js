@@ -1,11 +1,20 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./PizzaForm.css";
+import * as Yup from "yup";
 const PizzaForm = () => {
   const [name, setName] = useState("");
   const [size, setSize] = useState("");
   const [toppings, setToppings] = useState([]);
   const [special, setSpecial] = useState("");
+  const history = useHistory();
+
+  const PizzaFormSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "En az 3 karakter girilmelidir.")
+      .required(),
+  });
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -19,7 +28,7 @@ const PizzaForm = () => {
     const selectedToppings = Array.from(e.target.selectedOptions).map(
       (option) => option.value
     );
-    setToppings(selectedToppings);
+    setToppings(selectedToppings());
   };
 
   const handleSpecialChange = (e) => {
@@ -28,27 +37,32 @@ const PizzaForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const order = {
-      name,
-      size,
-      toppings,
-      special,
-    };
-    // burada veritabanına siparişi kaydetmek için bir API çağrısı yapılacak
-    console.log("Sipariş verildi: ", order);
-    setName("");
-    setSize("");
-    setToppings([]);
-    setSpecial("");
+    PizzaFormSchema.validate({ name })
+      .then(() => {
+        const order = {
+          name,
+          size,
+          toppings,
+          special,
+        };
+        console.log("Sipariş verildi: ", order);
+        setName("");
+        setSize("");
+        setToppings([]);
+        setSpecial("");
+        history.push("/success");
+      })
+      .catch((err) => {
+        console.log(err.errors);
+      });
   };
 
   return (
     <>
-      <div className="container">
+      <div className="container2">
         <div>
-          <h1>Teknolojik Yemekler</h1>
+          <h1 className="tekno">Teknolojik Yemekler</h1>
         </div>
-
         <nav>
           <ul>
             <li>
@@ -80,19 +94,23 @@ const PizzaForm = () => {
           </p>
         </div>
         <form id="pizza-form" onSubmit={handleSubmit}>
-          <label htmlFor="name-input">İsim:</label>
+          <label htmlFor="name-input">İsim Soyisim: </label>
           <input
             type="text"
             id="name-input"
+            name="name-input"
             value={name}
             onChange={handleNameChange}
             required
+            minLength={3}
           />
-
-          <label htmlFor="size-dropdown">Boyut:</label>
+          <br />
+          <br />
+          <label htmlFor="size-dropdown">Boyut: </label>
           <select
             id="size-dropdown"
             value={size}
+            name="size-dropdown"
             onChange={handleSizeChange}
             required
           >
@@ -103,30 +121,58 @@ const PizzaForm = () => {
           </select>
           <br />
           <br />
-          <label htmlFor="toppings-checkboxes">Çıkarılacak Malzemeler:</label>
+          <label htmlFor="toppings-checkboxes">Malzemeler:</label>
+          <br />
+          <br />
           <div id="toppings-checkboxes">
             <label htmlFor="pepperoni-checkbox">
-              <input type="checkbox" name="toppings1" value="pepperoni" />
+              <input
+                type="checkbox"
+                name="toppings"
+                value="pepperoni"
+                //onChange={handleToppingsChange}
+              />
               Pepperoni
             </label>
             <label htmlFor="mushrooms-checkbox">
-              <input type="checkbox" name="toppings2" value="mushrooms" />
+              <input
+                type="checkbox"
+                name="toppings"
+                value="mushrooms" //onChange={handleToppingsChange}
+              />
               Mantar
             </label>
             <label htmlFor="olives-checkbox">
-              <input type="checkbox" name="toppings3" value="olives" />
+              <input
+                type="checkbox"
+                name="toppings"
+                value="olives" //onChange={handleToppingsChange}
+              />
               Zeytin
             </label>
             <label htmlFor="sausage-checkbox">
-              <input type="checkbox" name="toppings4" value="sausage" />
+              <input
+                type="checkbox"
+                name="toppings"
+                value="sausage" //onChange={handleToppingsChange}
+              />
               Sosis
             </label>
             <label htmlFor="domates-checkbox">
-              <input type="checkbox" name="toppings5" value="domates" />
+              <input
+                type="checkbox"
+                name="toppings"
+                value="domates" //onChange={handleToppingsChange}
+              />
               Domates
             </label>
             <label htmlFor="biber-checkbox">
-              <input type="checkbox" name="toppings6" value="biber" />
+              <input
+                type="checkbox"
+                name="toppings"
+                value="biber"
+                //onChange={handleToppingsChange}
+              />
               Biber
             </label>
           </div>
@@ -136,6 +182,7 @@ const PizzaForm = () => {
           <input
             type="text"
             id="special-text"
+            name="special-text"
             value={special}
             onChange={handleSpecialChange}
           />

@@ -53,3 +53,10 @@ img {
   color: #fdc913;
   font-weight: bold;
 }
+
+#aciktim:hover {
+  background-color: yellow;
+  color: black;
+  border-radius: 1rem;
+  cursor: pointer;
+}

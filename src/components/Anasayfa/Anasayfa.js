@@ -16,7 +16,9 @@ const Anasayfa = () => {
       <p className="KodAciktirir">
         KOD ACIKTIRIR <br /> PİZZA, DOYURUR
       </p>
-      <button onClick={handlePizzaOrder}>ACIKTIM</button>
+      <button id="aciktim" onClick={handlePizzaOrder}>
+        ACIKTIM
+      </button>
       <img src="/banner.png" alt="Pizza" />
     </div>
   );

@@ -25,10 +25,14 @@ nav a {
   font-weight: bold;
   transition: color 0.6s ease;
   padding: 10px 20px;
+  background-color: #fdc913;
+  color: black;
+  border-radius: 1rem;
+  cursor: pointer;
 }
 
 nav a:hover {
-  background-color: #fdc913;
+  background-color: yellow;
   color: black;
   border-radius: 1rem;
   cursor: pointer;
@@ -42,4 +46,11 @@ p {
 
 .fırsat {
   text-align: center;
+}
+
+#order-button:hover {
+  background-color: yellow;
+  color: black;
+  border-radius: 1rem;
+  cursor: pointer;
 }

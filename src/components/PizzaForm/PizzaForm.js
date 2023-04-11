@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./PizzaForm.css";
 import * as Yup from "yup";
+import axios from "axios";
 const PizzaForm = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -10,6 +11,8 @@ const PizzaForm = () => {
   const [adet, setAdet] = useState(1);
   const [toppings, setToppings] = useState([]);
   const [special, setSpecial] = useState("");
+  const [total, setTotal] = useState(85.5);
+  const [secimler, setSecimler] = useState(0.0);
   const history = useHistory();
 
   const PizzaFormSchema = Yup.object().shape({
@@ -17,6 +20,14 @@ const PizzaForm = () => {
     address: Yup.string()
       .min(3, "En az 3 karakter girilmelidir.")
       .required(),
+    toppings: Yup.array()
+      .required()
+      .test("max-selected", "En fazla 3 seçenek seçilebilir.", (value) => {
+        if (value && value.length > 3) {
+          return false;
+        }
+        return true;
+      }),
   });
 
   const handleNameChange = (e) => {
@@ -31,10 +42,10 @@ const PizzaForm = () => {
   };
 
   const handleToppingsChange = (e) => {
-    const selectedToppings = Array.from(e.target.selectedOptions).map(
-      (option) => option.value
-    );
-    setToppings(selectedToppings());
+    const selectedToppings = Array.from(
+      document.querySelectorAll('input[name="toppings"]:checked')
+    ).map((input) => input.value);
+    setToppings(selectedToppings);
   };
 
   const handleSpecialChange = (e) => {
@@ -43,7 +54,7 @@ const PizzaForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    PizzaFormSchema.validate({ name, address })
+    PizzaFormSchema.validate({ name, address, toppings })
       .then(() => {
         const order = {
           name,
@@ -52,13 +63,22 @@ const PizzaForm = () => {
           toppings,
           special,
         };
-        console.log("Sipariş verildi: ", order);
-        setName("");
-        setAddress("");
-        setSize("");
-        setToppings([]);
-        setSpecial("");
-        history.push("/success");
+        // console.log("Sipariş verildi: ", order);   (axios kurmadan önce console.log ile sipariş verildi yazdırıldı)
+
+        axios
+          .post("https://reqres.in/api/users", order)
+          .then((response) => {
+            console.log("Sipariş başarıyla gönderildi:", response);
+            setName("");
+            setAddress("");
+            setSize("");
+            setToppings([]);
+            setSpecial("");
+            history.push("/success");
+          })
+          .catch((error) => {
+            console.error("Sipariş gönderilirken hata oluştu:", error);
+          });
       })
       .catch((err) => {
         console.log(err.errors);
@@ -82,7 +102,9 @@ const PizzaForm = () => {
                   <Link to="/secenekler">Seçenekler</Link>
                 </li>
                 <li>
-                  <Link to="/order-pizza">Sipariş Oluştur</Link>
+                  <Link to="/order-pizza" style={{ fontWeight: "bold" }}>
+                    Sipariş Oluştur
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -154,7 +176,9 @@ const PizzaForm = () => {
           <br />
           <br />
           <label htmlFor="toppings-checkboxes">
-            <b>Ek Malzemeler:</b>
+            <b>
+              Ek Malzemeler<span className="required">*</span>
+            </b>
           </label>{" "}
           <p>En Fazla 3 malzeme seçebilirsiniz. 5₺</p>
           <br />
@@ -164,7 +188,7 @@ const PizzaForm = () => {
                 type="checkbox"
                 name="toppings"
                 value="pepperoni"
-                //onChange={handleToppingsChange}
+                onChange={handleToppingsChange}
               />
               Pepperoni
             </label>
@@ -172,7 +196,8 @@ const PizzaForm = () => {
               <input
                 type="checkbox"
                 name="toppings"
-                value="mushrooms" //onChange={handleToppingsChange}
+                value="mushrooms"
+                onChange={handleToppingsChange}
               />
               Mantar
             </label>
@@ -180,7 +205,8 @@ const PizzaForm = () => {
               <input
                 type="checkbox"
                 name="toppings"
-                value="olives" //onChange={handleToppingsChange}
+                value="olives"
+                onChange={handleToppingsChange}
               />
               Zeytin
             </label>
@@ -188,7 +214,8 @@ const PizzaForm = () => {
               <input
                 type="checkbox"
                 name="toppings"
-                value="sausage" //onChange={handleToppingsChange}
+                value="sausage"
+                onChange={handleToppingsChange}
               />
               Sosis
             </label>
@@ -196,7 +223,8 @@ const PizzaForm = () => {
               <input
                 type="checkbox"
                 name="toppings"
-                value="domates" //onChange={handleToppingsChange}
+                value="domates"
+                onChange={handleToppingsChange}
               />
               Domates
             </label>
@@ -205,7 +233,7 @@ const PizzaForm = () => {
                 type="checkbox"
                 name="toppings"
                 value="biber"
-                //onChange={handleToppingsChange}
+                onChange={handleToppingsChange}
               />
               Biber
             </label>
@@ -226,10 +254,10 @@ const PizzaForm = () => {
           <br />
           <div className="cizgi"></div>
           <br />
-          <div class="adet-ve-siparis">
-            <div class="adet-bolumu">
+          <div className="adet-ve-siparis">
+            <div className="adet-bolumu">
               <button
-                class="minus-button"
+                className="minus-button"
                 type="button"
                 onClick={() => {
                   if (adet > 1) {
@@ -239,11 +267,11 @@ const PizzaForm = () => {
               >
                 -
               </button>
-              <div class="adet-kutusu">
-                <span class="adet-sayisi">{adet}</span>
+              <div className="adet-kutusu">
+                <span className="adet-sayisi">{adet}</span>
               </div>
               <button
-                class="plus-button"
+                className="plus-button"
                 type="button"
                 onClick={() => setAdet(adet + 1)}
               >
@@ -251,14 +279,14 @@ const PizzaForm = () => {
               </button>
             </div>
 
-            <div class="siparis-bolumu">
+            <div className="siparis-bolumu">
               <div>Sipariş Toplamı</div>
               <div className="secimler">
                 {" "}
-                <span>Seçimler:</span> <span>85,50 ₺</span>
+                <span>Seçimler:</span> <span>{secimler} ₺</span>
               </div>
-              <div className="secimler" style={{ color: "red" }}>
-                <span>Toplam:</span> <span>85,50 ₺</span>
+              <div className="secimler" style={{ color: " #ce2829" }}>
+                <span>Toplam:</span> <span>{total} ₺</span>
               </div>
               <button id="order-button" type="submit">
                 SİPARİŞ VER

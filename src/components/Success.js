@@ -10,12 +10,17 @@ const Success = () => {
   };
   return (
     <>
-      <div className="container">
-        <h1>Teknolojik Yemekler</h1>
+      <div className="success">
+        <div>
+          <h1>Teknolojik Yemekler</h1>
+        </div>
         <p className="KodAciktirir">
           TEBRİKLER <br /> SİPARİŞİNİZ ALINDI!
-          <button onClick={handleMain}>ANASAYFAYA DÖN</button>
+          <br />
         </p>
+        <button id="aciktim" onClick={handleMain}>
+          ANASAYFAYA DÖN
+        </button>
       </div>
     </>
   );

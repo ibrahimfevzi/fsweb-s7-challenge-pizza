@@ -5,13 +5,16 @@ import "./PizzaForm.css";
 import * as Yup from "yup";
 const PizzaForm = () => {
   const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
   const [size, setSize] = useState("");
+  const [adet, setAdet] = useState(1);
   const [toppings, setToppings] = useState([]);
   const [special, setSpecial] = useState("");
   const history = useHistory();
 
   const PizzaFormSchema = Yup.object().shape({
-    name: Yup.string()
+    name: Yup.string(),
+    address: Yup.string()
       .min(3, "En az 3 karakter girilmelidir.")
       .required(),
   });
@@ -20,6 +23,9 @@ const PizzaForm = () => {
     setName(e.target.value);
   };
 
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
   const handleSizeChange = (e) => {
     setSize(e.target.value);
   };
@@ -37,16 +43,18 @@ const PizzaForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    PizzaFormSchema.validate({ name })
+    PizzaFormSchema.validate({ name, address })
       .then(() => {
         const order = {
           name,
+          address,
           size,
           toppings,
           special,
         };
         console.log("Sipariş verildi: ", order);
         setName("");
+        setAddress("");
         setSize("");
         setToppings([]);
         setSpecial("");
@@ -60,42 +68,49 @@ const PizzaForm = () => {
   return (
     <>
       <div className="container2">
-        <div>
-          <h1 className="tekno">Teknolojik Yemekler</h1>
-          <p className="fırsat">fırsatı kaçırma</p>
+        <div className="header">
+          <div>
+            <div>
+              <h2 className="tekno">Teknolojik Yemekler</h2>
+            </div>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Anasayfa</Link>
+                </li>
+                <li>
+                  <Link to="/secenekler">Seçenekler</Link>
+                </li>
+                <li>
+                  <Link to="/order-pizza">Sipariş Oluştur</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Anasayfa</Link>
-            </li>
-            <li>
-              <Link to="/secenekler">Seçenekler</Link>
-            </li>
-            <li>
-              <Link to="/order-pizza">Sipariş Oluştur</Link>
-            </li>
-          </ul>
-        </nav>
-        <div>
-          <h2>Position Absolute Acı Pizza</h2>
-          <h3>85,50 ₺</h3>
-          <p>
-            Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı
-            pizza tam sana göre. Pizza, domates, peynir ve genellikle çeşitli
-            diğer malzemelerle kaplanmış, daha sonra geleneksel olarak odun
-            ateşinde bir fırında yüksek sıcaklıkta pişirilen, genellikle
-            yuvarlak, düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan
-            kökenli lezzetli bir yemektir.. Küçük bir pizzaya bazen pizzetta
-            denir.
-          </p>
-          <p>
-            İçindekiler: Domates sos, mozzarella peyniri, domates, biber,
-            mantar, zeytin, sosis, pepperoni
-          </p>
-        </div>
+      </div>
+      <div className="siparis-body">
+        <br />
+        <h2>Position Absolute Acı Pizza</h2>
+        <br />
+        <h3>85,50 ₺</h3>
+        <p>
+          Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı
+          pizza tam sana göre. Pizza, domates, peynir ve genellikle çeşitli
+          diğer malzemelerle kaplanmış, daha sonra geleneksel olarak odun
+          ateşinde bir fırında yüksek sıcaklıkta pişirilen, genellikle yuvarlak,
+          düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli
+          lezzetli bir yemektir.. Küçük bir pizzaya bazen pizzetta denir.
+        </p>
+
+        <br />
+
         <form id="pizza-form" onSubmit={handleSubmit}>
-          <label htmlFor="name-input">İsim Soyisim: </label>
+          <label htmlFor="name-input">
+            <b>
+              İsim Soyisim <span className="required">*</span>
+            </b>{" "}
+          </label>
           <input
             type="text"
             id="name-input"
@@ -105,9 +120,25 @@ const PizzaForm = () => {
             required
             minLength={3}
           />
+          <label htmlFor="address-input">
+            <b>
+              Adres <span className="required">*</span>
+            </b>{" "}
+          </label>
+          <input
+            type="text"
+            id="address-input"
+            name="address-input"
+            value={address}
+            onChange={handleAddressChange}
+            required
+            minLength={3}
+          />
           <br />
           <br />
-          <label htmlFor="size-dropdown">Boyut: </label>
+          <label htmlFor="size-dropdown">
+            Boyut Seç<span className="required">*</span>{" "}
+          </label>
           <select
             id="size-dropdown"
             value={size}
@@ -122,8 +153,10 @@ const PizzaForm = () => {
           </select>
           <br />
           <br />
-          <label htmlFor="toppings-checkboxes">Malzemeler:</label>
-          <br />
+          <label htmlFor="toppings-checkboxes">
+            <b>Ek Malzemeler:</b>
+          </label>{" "}
+          <p>En Fazla 3 malzeme seçebilirsiniz. 5₺</p>
           <br />
           <div id="toppings-checkboxes">
             <label htmlFor="pepperoni-checkbox">
@@ -179,21 +212,62 @@ const PizzaForm = () => {
           </div>
           <br />
           <br />
-          <label htmlFor="special-text">Özel İstekler:</label>
+          <label htmlFor="special-text">Sipariş Notu</label>
+          <br />
           <input
             type="text"
             id="special-text"
             name="special-text"
             value={special}
             onChange={handleSpecialChange}
+            placeholder="Siparişine eklemek istediğin bir not var mı ?"
           />
           <br />
           <br />
-          <button id="order-button" type="submit">
-            Sipariş Ver
-          </button>
+          <div className="cizgi"></div>
+          <br />
+          <div class="adet-ve-siparis">
+            <div class="adet-bolumu">
+              <button
+                class="minus-button"
+                type="button"
+                onClick={() => {
+                  if (adet > 1) {
+                    setAdet(adet - 1);
+                  }
+                }}
+              >
+                -
+              </button>
+              <div class="adet-kutusu">
+                <span class="adet-sayisi">{adet}</span>
+              </div>
+              <button
+                class="plus-button"
+                type="button"
+                onClick={() => setAdet(adet + 1)}
+              >
+                +
+              </button>
+            </div>
+
+            <div class="siparis-bolumu">
+              <div>Sipariş Toplamı</div>
+              <div className="secimler">
+                {" "}
+                <span>Seçimler:</span> <span>85,50 ₺</span>
+              </div>
+              <div className="secimler" style={{ color: "red" }}>
+                <span>Toplam:</span> <span>85,50 ₺</span>
+              </div>
+              <button id="order-button" type="submit">
+                SİPARİŞ VER
+              </button>
+            </div>
+          </div>
         </form>
       </div>
+      <div className="footer"></div>
     </>
   );
 };

@@ -1,7 +1,6 @@
 .success {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #ce2829;
@@ -27,6 +26,33 @@
   font-size: 2.5rem;
   margin-top: 1rem;
   font-family: "Satisfy", sans-serif;
+  color: #fdc913 !important;
+}
+
+.alt-kisim {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.aciktim {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  padding: 0.5rem 2rem;
+  border: none;
+  background-color: #fdc913;
+  color: black;
   font-weight: bold;
-  color: #fdc913;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.secenekler {
+  color: #ce2829;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

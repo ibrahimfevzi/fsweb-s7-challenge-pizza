@@ -1,10 +1,7 @@
-describe("Form Submission Test", () => {
+describe("Form Gönderme Testi", () => {
   it("Submits the form with name and toppings", () => {
     // Form sayafasına git
     cy.visit("http://localhost:3000/order-pizza");
-
-    // İnputa isim gir
-    cy.get('input[name="name-input"]').type("ibrahim");
 
     // İnputa isim gir
     cy.get('input[name="name-input"]').type("ibrahim");
@@ -24,5 +21,28 @@ describe("Form Submission Test", () => {
 
     // Formu gönder
     cy.get('button[type="submit"]').click();
+  });
+});
+
+describe("Position Absolute Acı Pizza tagi sayfada görünüyor", () => {
+  it("should be visible on the page", () => {
+    cy.visit("http://localhost:3000/order-pizza");
+    cy.contains("h2", "Position Absolute Acı Pizza").should("be.visible");
+  });
+});
+
+describe("Navbar ve öğeleri sayfada görünüyor", () => {
+  it("should have 3 items", () => {
+    cy.visit("http://localhost:3000/order-pizza");
+    cy.get("nav")
+      .find("li")
+      .should("have.length", 3);
+  });
+});
+
+describe("Sipariş butonu", () => {
+  it("should be visible on the page", () => {
+    cy.visit("http://localhost:3000/order-pizza");
+    cy.contains("SİPARİŞ VER").should("be.visible");
   });
 });

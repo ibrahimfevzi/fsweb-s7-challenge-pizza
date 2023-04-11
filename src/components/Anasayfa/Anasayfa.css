@@ -78,6 +78,13 @@ body {
   text-align: center;
   background-color: #ce2829;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#banner {
+  margin: 0px auto;
 }
 
 h1 {
@@ -130,29 +137,4 @@ img {
   color: black;
   border-radius: 1rem;
   cursor: pointer;
-}
-
-.success {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #ce2829;
-}
-
-.success h1 {
-  text-align: center;
-  color: white;
-  margin-top: 0px;
-}
-
-.success p {
-  text-align: center;
-  color: white;
-  margin-top: 10px;
-}
-
-.success button {
-  margin-top: 10px;
 }

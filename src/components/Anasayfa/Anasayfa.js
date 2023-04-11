@@ -11,15 +11,20 @@ const Anasayfa = () => {
 
   return (
     <div className="container">
-      <h1>Teknolojik Yemekler</h1>
-      <p className="fırsat">fırsatı kaçırma</p>
-      <p className="KodAciktirir">
-        KOD ACIKTIRIR <br /> PİZZA, DOYURUR
-      </p>
-      <button id="aciktim" onClick={handlePizzaOrder}>
-        ACIKTIM
-      </button>
-      <img src="/banner.png" alt="Pizza" />
+      <div>
+        <h1>Teknolojik Yemekler</h1>
+        <p className="fırsat">fırsatı kaçırma</p>
+        <p className="KodAciktirir">
+          KOD ACIKTIRIR <br /> PİZZA, DOYURUR
+        </p>
+        <button id="aciktim" onClick={handlePizzaOrder}>
+          ACIKTIM
+        </button>
+      </div>
+      <div className="banner">
+        {" "}
+        <img id="banner" src="/banner.png" alt="Pizza" />
+      </div>
     </div>
   );
 };

@@ -6,6 +6,12 @@ describe("Form Submission Test", () => {
     // İnputa isim gir
     cy.get('input[name="name-input"]').type("ibrahim");
 
+    // İnputa isim gir
+    cy.get('input[name="name-input"]').type("ibrahim");
+
+    // adres gir
+    cy.get('input[name="address-input"]').type("Kurtköy Mah. 123 Sok. No: 1");
+
     // Dropdown menüden "Büyük" seç
     cy.get('select[name="size-dropdown"]').select("Büyük");
 

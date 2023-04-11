@@ -13,21 +13,24 @@ const PizzaForm = () => {
   const [special, setSpecial] = useState("");
   const [total, setTotal] = useState(85.5);
   const [secimler, setSecimler] = useState(0.0);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const history = useHistory();
 
   const PizzaFormSchema = Yup.object().shape({
     name: Yup.string(),
-    address: Yup.string()
-      .min(3, "En az 3 karakter girilmelidir.")
-      .required(),
-    toppings: Yup.array()
-      .required()
-      .test("max-selected", "En fazla 3 seçenek seçilebilir.", (value) => {
+    address: Yup.string().min(3, "En az 3 karakter girilmelidir."),
+
+    toppings: Yup.array().test(
+      "max-selected",
+      "En fazla 3 seçenek seçilebilir.",
+      (value) => {
         if (value && value.length > 3) {
           return false;
         }
         return true;
-      }),
+      }
+    ),
   });
 
   const handleNameChange = (e) => {
@@ -54,6 +57,7 @@ const PizzaForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     PizzaFormSchema.validate({ name, address, toppings })
       .then(() => {
         const order = {
@@ -63,7 +67,6 @@ const PizzaForm = () => {
           toppings,
           special,
         };
-        // console.log("Sipariş verildi: ", order);   (axios kurmadan önce console.log ile sipariş verildi yazdırıldı)
 
         axios
           .post("https://reqres.in/api/users", order)
@@ -82,6 +85,11 @@ const PizzaForm = () => {
       })
       .catch((err) => {
         console.log(err.errors);
+        if (err.errors.name) {
+          setErrorMessage("Lütfen bir isim giriniz.");
+        } else if (err.errors.address) {
+          setErrorMessage("Lütfen bir adres giriniz.");
+        }
       });
   };
 
@@ -124,9 +132,7 @@ const PizzaForm = () => {
           düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli
           lezzetli bir yemektir.. Küçük bir pizzaya bazen pizzetta denir.
         </p>
-
         <br />
-
         <form id="pizza-form" onSubmit={handleSubmit}>
           <label htmlFor="name-input">
             <b>
@@ -288,6 +294,7 @@ const PizzaForm = () => {
               <div className="secimler" style={{ color: " #ce2829" }}>
                 <span>Toplam:</span> <span>{total} ₺</span>
               </div>
+
               <button id="order-button" type="submit">
                 SİPARİŞ VER
               </button>
@@ -295,6 +302,7 @@ const PizzaForm = () => {
           </div>
         </form>
       </div>
+
       <div className="footer"></div>
     </>
   );

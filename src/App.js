@@ -17,7 +17,7 @@ const App = () => {
       <Route path="/secenekler">
         <Secenekler />
       </Route>
-      <Route path="/">
+      <Route exact path="/">
         <Anasayfa />
       </Route>
     </Switch>

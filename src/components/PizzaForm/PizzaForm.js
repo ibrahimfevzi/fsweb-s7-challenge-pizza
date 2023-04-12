@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./PizzaForm.css";
@@ -11,6 +11,7 @@ const PizzaForm = () => {
   const [adet, setAdet] = useState(1);
   const [toppings, setToppings] = useState([]);
   const [special, setSpecial] = useState("");
+  const a = 85.5;
   const [total, setTotal] = useState(85.5);
   const [secimler, setSecimler] = useState(0.0);
   const [errorMessage, setErrorMessage] = useState("");
@@ -44,16 +45,34 @@ const PizzaForm = () => {
     setSize(e.target.value);
   };
 
+  const handleAdetChange = (newAdet) => {
+    setAdet(newAdet);
+
+    let secimler = toppings.length * newAdet * 5;
+    setSecimler(secimler);
+
+    let total = (a + toppings.length * 5) * newAdet;
+    setTotal(total);
+  };
+
   const handleToppingsChange = (e) => {
     const selectedToppings = Array.from(
       document.querySelectorAll('input[name="toppings"]:checked')
     ).map((input) => input.value);
     setToppings(selectedToppings);
+
+    let secimler = selectedToppings.length * adet * 5;
+    setSecimler(secimler);
   };
 
-  const handleSpecialChange = (e) => {
+  useEffect(() => {
+    let newTotal = (a + toppings.length * 5) * adet;
+    setTotal(newTotal);
+  }, [adet, toppings]);
+
+  function handleSpecialChange(e) {
     setSpecial(e.target.value);
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -267,19 +286,21 @@ const PizzaForm = () => {
                 type="button"
                 onClick={() => {
                   if (adet > 1) {
-                    setAdet(adet - 1);
+                    handleAdetChange(adet - 1);
                   }
                 }}
               >
                 -
               </button>
+
               <div className="adet-kutusu">
                 <span className="adet-sayisi">{adet}</span>
               </div>
+
               <button
                 className="plus-button"
                 type="button"
-                onClick={() => setAdet(adet + 1)}
+                onClick={() => handleAdetChange(adet + 1)}
               >
                 +
               </button>

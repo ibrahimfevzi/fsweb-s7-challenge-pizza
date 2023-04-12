@@ -85,6 +85,8 @@ const PizzaForm = () => {
           size,
           toppings,
           special,
+          Fiyat: total,
+          adet,
         };
 
         axios

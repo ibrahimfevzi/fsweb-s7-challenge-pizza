@@ -87,6 +87,13 @@ body {
   margin: 0px auto;
 }
 
+img {
+  display: block;
+  margin: 2rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
 h1 {
   font-size: 3rem;
   font-family: "Quattrocento", serif;
@@ -110,13 +117,6 @@ p {
 
   border-radius: 1rem;
   cursor: pointer;
-}
-
-img {
-  display: block;
-  margin: 2rem auto;
-  max-width: 100%;
-  height: auto;
 }
 
 .KodAciktirir {

@@ -14,7 +14,7 @@ const PizzaForm = () => {
   const a = 85.5;
   const [total, setTotal] = useState(85.5);
   const [secimler, setSecimler] = useState(0.0);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [setErrorMessage] = useState("");
 
   const history = useHistory();
 
